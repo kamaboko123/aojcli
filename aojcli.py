@@ -2,7 +2,13 @@
 
 import os
 import sys
+import argparse
 import libaoj
+
+support_oper = ["submit"]
+
+#TODO : get from API
+support_lang = ["C", "C++"]
 
 def error_exit(message, exit_code = -1):
     output = ""
@@ -31,5 +37,45 @@ try:
 except libaoj.AojApiError as e:
     error_exit(e.get_message())
 
-print "Authentication : Success"
+parser = argparse.ArgumentParser(description = "AOJ submission tool on CLI")
+parser.add_argument(
+    "operation",
+    const = None,
+    choices = support_oper,
+    help = 'Operation of AOJ',
+)
+
+parser.add_argument(
+    "problem_id",
+    const = None,
+    help = 'Problem ID',
+)
+parser.add_argument(
+    "language",
+    const = None,
+    choices = support_lang,
+    help = 'Laugage of source code'
+)
+parser.add_argument(
+    "file",
+    const = None,
+    help = 'source code file'
+)
+
+args = parser.parse_args()
+
+try:
+    with open(args.file, "r") as source_file:
+        source_code = source_file.read()
+    
+    ret = api.submit(args.problem_id, args.language, source_code)
+    print "[submit success]"
+    print "Access token for checking result : %s" % ret["token"]
+    
+
+except IOError as e:
+    error_exit(str(e))
+except libaoj.AojApiError as e:
+    print e.get_detail()
+    error_exit(e.get_message())
 

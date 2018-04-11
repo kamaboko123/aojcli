@@ -12,7 +12,7 @@ class Api:
     endpoint = "https://judgeapi.u-aizu.ac.jp"
     path = {
         "session":"/session",
-        "submit":"/submission"
+        "submit":"/submissions"
     }
     
     post_header_base = {'content-type': 'application/json'}
@@ -38,12 +38,32 @@ class Api:
         )
         
         if resp.status_code != 200:
-            raise AojApiError("authentication error", detail=resp)
+            raise AojApiError("auth error", detail=resp)
         
-        cookie = resp.cookies
+        self.cookie = resp.cookies
         
-    def submit(self, problem_id, lang, source_code):
-        pass
+    def submit(self, problem_id, language, source_code):
+        data = {
+            "problemId" : problem_id,
+            "language" : language,
+            "sourceCode" : source_code
+        }
+        
+        resp = requests.post(
+            self.API["submit"],
+            headers =  self.post_header_base,
+            cookies = self.cookie,
+            data = json.dumps(data)
+        )
+        
+        if resp.status_code != 200:
+            raise AojApiError("submit error", detail=resp)
+        
+        resp_data = resp.json()
+        if "token" not in resp_data.keys():
+            raise AojApiError("submit success, but receive invalid responce", detail=resp)
+        
+        return resp_data
         
 
 class AojApiError(Exception):
@@ -52,10 +72,14 @@ class AojApiError(Exception):
     
     def __init__(self, message, detail=None):
         self.set_message(message)
-    
-    def set_message(self, message, detail=None):
-        self.err_message = message
+        self.set_detail(detail)
         
+    def set_message(self, message):
+        self.err_message = message
+    
+    def set_detail(self, detail):
+        self.err_detail = detail
+    
     def get_message(self):
         return self.err_message
     
