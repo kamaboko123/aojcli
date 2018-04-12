@@ -2,7 +2,7 @@
 AOJ submission tools on CLI  
 [AIZU ONLINE JUDGE](http://judge.u-aizu.ac.jp/)
 
-## System requirement
+## System requirements
 - Python 2.7
 
 ## Setup
@@ -11,8 +11,8 @@ You need to set your user id and password to environment variables.
 ```
 $ git clone https://github.com/kamaboko123/aojcli.git
 $ cd aojcli
-$ 'export AOJCLI_ID=your_user_id_of_AOJ' >> .bachrc
-$ 'export AOJCLI_PASSWORD=your_password_of_AOJ' >> .bachrc
+$ echo 'export AOJCLI_ID=your_user_id_of_AOJ' >> ~/.bachrc
+$ echo 'export AOJCLI_PASSWORD=your_password_of_AOJ' >> ~/.bachrc
 ```
 
 ### Command
