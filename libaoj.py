@@ -8,11 +8,27 @@ class Api:
     }
     cookie = None
     
+    user = {}
+    
     API = {}
     endpoint = "https://judgeapi.u-aizu.ac.jp"
     path = {
         "session":"/session",
-        "submit":"/submissions"
+        "submit":"/submissions",
+        "submit_record_recent":"/submission_records/users/%s/problems/%s"
+    }
+    
+    status_codes={
+        0 : "STATE_COMPILEERROR",
+        1 : "STATE_WRONGANSWER",
+        2 : "STATE_TIMELIMIT",
+        3 : "STATE_MEMORYLIMIT",
+        4 : "STATE_ACCEPTED",
+        5 : "STATE_WAITING",
+        6 : "STATE_OUTPUTLIMIT",
+        7 : "STATE_RUNTIMEERROR",
+        8 : "STATE_PRESENTATIONERROR",
+        9 : "STATE_RUNNING"
     }
     
     post_header_base = {'content-type': 'application/json'}
@@ -40,6 +56,7 @@ class Api:
         if resp.status_code != 200:
             raise AojApiError("auth error", detail=resp)
         
+        self.user = resp.json()
         self.cookie = resp.cookies
         
     def submit(self, problem_id, language, source_code):
@@ -64,6 +81,14 @@ class Api:
             raise AojApiError("submit success, but receive invalid responce", detail=resp)
         
         return resp_data
+    
+    def get_my_submit_record(self, problem_id):
+        url = self.API["submit_record_recent"] % (self.user["id"], problem_id)
+        
+        resp = requests.get(
+            url,
+        )
+        return resp.json()
         
 
 class AojApiError(Exception):
