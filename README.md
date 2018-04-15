@@ -18,8 +18,13 @@ $ echo 'export AOJCLI_PASSWORD=your_password_of_AOJ' >> ~/.bachrc
 ### Command
 
 #### submit
-example :
+submit your code to AOJ.
 ```
 $ ./aojcli.py submit ITP1_1_A C ITP1_1_A.c
 ```
 
+#### status
+check status of problem.
+```
+$ ./aojcli.py status ITP1_1_A
+```
