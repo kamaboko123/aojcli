@@ -1,5 +1,5 @@
 # aojcli
-AOJ submission tools on CLI  
+AOJ submission tool on CLI  
 [AIZU ONLINE JUDGE](http://judge.u-aizu.ac.jp/)
 
 ## System requirements
@@ -27,7 +27,7 @@ $ ./aojcli.py submit ITP1_1_A C ITP1_1_A.c
 ```
 
 ### status
-check status of problem.
+check your submission status of problem.
 ```
 $ ./aojcli.py status ITP1_1_A
 ```
