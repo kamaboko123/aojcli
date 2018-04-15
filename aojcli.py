@@ -10,7 +10,7 @@ import libaoj
 support_oper = ["submit"]
 
 #TODO : get from API
-support_lang = ["C", "C++"]
+support_lang = ["C", "C++", "Java", "C++11", "C++14", "C#", "D", "Ruby", "Python", "Ptyhon3", "PHP", "JavaScript", "Scala", "Haskell", "OCaml", "Rust", "Go", "Kotlin"]
 
 def error_exit(message, exit_code = -1):
     output = ""
