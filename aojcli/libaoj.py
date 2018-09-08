@@ -15,7 +15,7 @@ class Api:
     path = {
         "session":"/session",
         "submit":"/submissions",
-        "submit_record_recent":"/submission_records/users/%s/problems/%s"
+        "submit_record_recent":"/submission_records/users/%s/problems/%s",
     }
     
     status_codes={
@@ -89,7 +89,7 @@ class Api:
             url,
         )
         return resp.json()
-        
+    
 
 class AojApiError(Exception):
     err_message = None

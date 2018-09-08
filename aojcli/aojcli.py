@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 import os
 import sys
 import argparse
@@ -59,58 +57,59 @@ def command_status(api, args):
     
     print table.draw()
 
-try:
-    user_id = os.environ["AOJCLI_ID"]
-    password = os.environ["AOJCLI_PASSWORD"]
-    
-except KeyError as e:
-    message = [
-        "Error.\n\n",
-        "Required environment values is not set.\n",
-        "Please set following environment values.\n",
-        "AOJCLI_ID : Your user id of AOJ\n",
-        "AOJCLI_PASSWORD : Your password of AOJ\n",
-    ]
-    error_exit(message)
+def main():
+    try:
+        user_id = os.environ["AOJCLI_ID"]
+        password = os.environ["AOJCLI_PASSWORD"]
+        
+    except KeyError as e:
+        message = [
+            "Error.\n\n",
+            "Required environment values is not set.\n",
+            "Please set following environment values.\n",
+            "AOJCLI_ID : Your user id of AOJ\n",
+            "AOJCLI_PASSWORD : Your password of AOJ\n",
+        ]
+        error_exit(message)
 
-try:
-    api = libaoj.Api(user_id, password)
-except libaoj.AojApiError as e:
-    error_exit(e.get_message())
+    try:
+        api = libaoj.Api(user_id, password)
+    except libaoj.AojApiError as e:
+        error_exit(e.get_message())
 
-parser = argparse.ArgumentParser(description = "AOJ submission tool on CLI")
-subparsers = parser.add_subparsers()
+    parser = argparse.ArgumentParser(description = "AOJ submission tool on CLI")
+    subparsers = parser.add_subparsers()
 
-parser_submit = subparsers.add_parser("submit", help='see `submit -h`')
-parser_submit.add_argument(
-    "problem_id",
-    const = None,
-    help = 'Problem ID',
-)
-parser_submit.add_argument(
-    "language",
-    const = None,
-    choices = support_lang,
-    help = 'Laugage of source code'
-)
-parser_submit.add_argument(
-    "file",
-    const = None,
-    help = 'source code file'
-)
-parser_submit.set_defaults(handler=command_submit)
+    parser_submit = subparsers.add_parser("submit", help='see `submit -h`')
+    parser_submit.add_argument(
+        "problem_id",
+        const = None,
+        help = 'Problem ID',
+    )
+    parser_submit.add_argument(
+        "language",
+        const = None,
+        choices = support_lang,
+        help = 'Laugage of source code'
+    )
+    parser_submit.add_argument(
+        "file",
+        const = None,
+        help = 'source code file'
+    )
+    parser_submit.set_defaults(handler=command_submit)
 
-parser_status = subparsers.add_parser("status", help="see `status -h`")
-parser_status.add_argument(
-    "problem_id",
-    const = None,
-    help = 'Problem ID'
-)
-parser_status.set_defaults(handler=command_status)
+    parser_status = subparsers.add_parser("status", help="see `status -h`")
+    parser_status.add_argument(
+        "problem_id",
+        const = None,
+        help = 'Problem ID'
+    )
+    parser_status.set_defaults(handler=command_status)
 
-args = parser.parse_args()
-if hasattr(args, 'handler'):
-    args.handler(api, args)
-else:
-    parser.print_help()
+    args = parser.parse_args()
+    if hasattr(args, 'handler'):
+        args.handler(api, args)
+    else:
+        parser.print_help()
 
