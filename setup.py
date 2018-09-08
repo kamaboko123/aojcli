@@ -9,7 +9,7 @@ setup(
     url='https://github.com/kamaboko123/aojcli',
     author='kamaboko123',
     author_email='6112062+kamaboko123@users.noreply.github.com',
-    license='MIT',
+    license='LGPL',
     packages=['aojcli'],
     install_requires=requires,
     classifiers=[
