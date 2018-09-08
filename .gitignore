@@ -1,3 +1,6 @@
 *.swp
 *.pyc
 tmp/
+dist/
+build/
+aojcli.egg-info/
