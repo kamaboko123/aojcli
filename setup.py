@@ -4,7 +4,7 @@ requires = ["requests", "texttable"]
 
 setup(
     name='aojcli',
-    version='0.7',
+    version='0.8',
     description='AOJ submit tool',
     url='https://github.com/kamaboko123/aojcli',
     author='kamaboko123',
@@ -13,7 +13,7 @@ setup(
     packages=['aojcli'],
     install_requires=requires,
     classifiers=[
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.7',
     ],
     entry_points={
         'console_scripts': ['aojcli=aojcli.aojcli:main']
