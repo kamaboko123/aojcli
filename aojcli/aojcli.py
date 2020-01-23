@@ -3,7 +3,7 @@ import sys
 import argparse
 import datetime
 import texttable
-import libaoj
+from . import libaoj
 
 support_oper = ["submit"]
 
@@ -24,8 +24,8 @@ def command_submit(api, args):
             source_code = source_file.read()
         
         ret = api.submit(args.problem_id, args.language, source_code)
-        print "[submit success]"
-        print "Access token for checking result : %s" % ret["token"]
+        print("[submit success]")
+        print("Access token for checking result : %s" % ret["token"])
         
     except IOError as e:
         error_exit(str(e))
@@ -41,7 +41,7 @@ def command_status(api, args):
         #print e.get_detail)
         error_exit(e.get_message())
     
-    print "[Status of submission(%s)]" % args.problem_id
+    print("[Status of submission(%s)]" % args.problem_id)
     table = texttable.Texttable(max_width=100)
     table.add_row(["judge id", "status", "lang", "submit date", "judge date"])
     for problem in ret:
@@ -55,7 +55,7 @@ def command_status(api, args):
             judge_date
         ])
     
-    print table.draw()
+    print(table.draw())
 
 def main():
     try:

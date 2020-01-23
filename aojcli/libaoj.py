@@ -34,7 +34,7 @@ class Api:
     post_header_base = {'content-type': 'application/json'}
     
     def __init__(self, user_id, password):
-        for k, v in self.path.items():
+        for k, v in list(self.path.items()):
             self.API[k] =  self.endpoint + v
         self.credential["id"] = user_id
         self.credential["password"] = password
@@ -77,7 +77,7 @@ class Api:
             raise AojApiError("submit error", detail=resp)
         
         resp_data = resp.json()
-        if "token" not in resp_data.keys():
+        if "token" not in list(resp_data.keys()):
             raise AojApiError("submit success, but receive invalid responce", detail=resp)
         
         return resp_data
